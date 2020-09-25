@@ -1,61 +1,71 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { TextField, Button } from '@material-ui/core';
+import {
+  TextField,
+  Button,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from '@material-ui/core';
 import { getStock } from './api/getStock';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import StockInfo from './Components/StockInfo';
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 5rem;
-
-`
+`;
 
 const SymbolInputContainer = styled.div`
-
   .search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    &__input {
+      width: 30rem;
+    }
 
-      &__input {
-        width: 30rem;
-      }
-
-      &__button {
-        margin-top: 1rem;
-        width: 10rem;
-      }
+    &__button {
+      margin-top: 1rem;
+      width: 10rem;
+    }
   }
-
-`
+`;
 
 function App() {
   const [symbol, setSymbol] = useState('');
 
-    const handleSubmit = async (e) =>{
-      e.preventDefault();
-      const data = await getStock(symbol);
-      console.log(data);
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = await getStock(symbol);
+    console.log(data);
+  };
 
   return (
     <AppContainer>
       <SymbolInputContainer>
-        <form onSubmit={handleSubmit} className="search-form">
-        <TextField
-          value={symbol}
-          onChange={(e)=>setSymbol(e.target.value)}
-          className="search-form__input"
-          fullWidth
-          label="Stock symbol"
-        />
-        <Button type="submit" className="search-form__button" variant="contained" color="primary">
-          Get Stocked!
-        </Button>
+        <form onSubmit={handleSubmit} className='search-form'>
+          <TextField
+            value={symbol}
+            onChange={(e) => setSymbol(e.target.value)}
+            className='search-form__input'
+            fullWidth
+            label='Stock symbol'
+          />
+          <Button
+            type='submit'
+            className='search-form__button'
+            variant='contained'
+            color='primary'
+          >
+            Get Stocked!
+          </Button>
         </form>
       </SymbolInputContainer>
-
+      <StockInfo />
     </AppContainer>
   );
 }
