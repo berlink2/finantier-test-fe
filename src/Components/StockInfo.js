@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { formatCash } from '../utils/formatCash';
 import {
   Accordion,
   AccordionSummary,
@@ -32,6 +33,14 @@ const StockPriceContainer = styled.div`
       margin-left: 1rem;
       margin-top: 1.5rem;
       font-size: 2rem;
+
+      &--positive {
+        color: green;
+      }
+
+      &--negative {
+        color: red;
+      }
     }
   }
 `;
@@ -53,16 +62,19 @@ const StockDetailsContainer = styled.div`
   }
 `;
 
-const StockInfo = () => {
+const StockInfo = ({ stock }) => {
   const [open, setOpen] = useState(true);
+  console.log(stock);
   return (
     <StockInfoContainer>
       <Accordion onChange={() => setOpen(!open)} expanded={open}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <CompanyNameContainer>
-            <Typography variant='h4'>Apple, Inc. (AAPL)</Typography>
+            <Typography variant='h4'>
+              {stock.companyName} ({stock.symbol})
+            </Typography>
             <Typography variant='subtitle1'>
-              NasdaqGS - NasdqsGS Real Time Price. Currency in USD
+              {stock.primaryExchange} - {stock.latestSource}. Currency in USD
             </Typography>
           </CompanyNameContainer>
         </AccordionSummary>
@@ -70,52 +82,85 @@ const StockInfo = () => {
           <StockPriceContainer>
             <div className='price'>
               <Typography variant='h2'>
-                <strong>449.39</strong>
+                <strong>{stock.latestPrice}</strong>
               </Typography>
-              <span className='price__percent'>+7.24 (+1.64%)</span>
+              <span
+                className={`price__percent ${
+                  stock.change > 0 && stock.change !== 0
+                    ? 'price__percent--positive'
+                    : 'price__percent--negative'
+                }`}
+              >
+                {stock.change > 0 ? '+' : '-'} {stock.change} (
+                {stock.changePercent * 100}%)
+              </span>
             </div>
-            <Typography variant='subtitle2'>At close: 4:00PM EDT</Typography>
+            <Typography variant='subtitle2'>
+              At close:{' '}
+              {stock.closeTime
+                ? new Date(stock.closeTime).toLocaleString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    hour12: true,
+                    timeZone: 'America/New_York',
+                    timeZoneName: 'short',
+                  })
+                : 'N/A'}
+            </Typography>
             <StockDetailsContainer>
               <div className='summary-item'>
                 <Typography variant='body1'>Previous Close</Typography>
                 <Typography variant='body1'>
-                  <strong>442.15</strong>
+                  <strong>
+                    {stock.previousClose ? stock.previousClose : 'N/A'}
+                  </strong>
                 </Typography>
               </div>
               <div className='summary-item'>
                 <Typography variant='body1'>Market Cap</Typography>
                 <Typography variant='body1'>
-                  <strong>442.15B</strong>
+                  <strong>{formatCash(stock.marketCap)}</strong>
                 </Typography>
               </div>
               <div className='summary-item'>
                 <Typography variant='body1'>Open</Typography>
                 <Typography variant='body1'>
-                  <strong>442.15</strong>
+                  <strong>{stock.open ? stock.open : 'N/A'}</strong>
                 </Typography>
               </div>
               <div className='summary-item'>
                 <Typography variant='body1'>Bid</Typography>
                 <Typography variant='body1'>
-                  <strong>442.15B</strong>
+                  <strong>
+                    {stock.iexBidPrice
+                      ? `${stock.iexBidPrice} x ${stock.iexBidSize}`
+                      : 'N/A'}
+                  </strong>
                 </Typography>
               </div>
               <div className='summary-item'>
                 <Typography variant='body1'>Ask</Typography>
                 <Typography variant='body1'>
-                  <strong>442.15B</strong>
+                  <strong>
+                    {stock.iexAskPrice
+                      ? `${stock.iexAskPrice} x ${stock.iexAskPrice}`
+                      : 'N/A'}
+                  </strong>
                 </Typography>
               </div>
               <div className='summary-item'>
                 <Typography variant='body1'>Volume</Typography>
                 <Typography variant='body1'>
-                  <strong>442.15B</strong>
+                  <strong>{stock.volume.toLocaleString()}</strong>
                 </Typography>
               </div>
               <div className='summary-item'>
                 <Typography variant='body1'>Avg Volume</Typography>
                 <Typography variant='body1'>
-                  <strong>442.15B</strong>
+                  <strong>{stock.avgTotalVolume.toLocaleString()}</strong>
                 </Typography>
               </div>
             </StockDetailsContainer>

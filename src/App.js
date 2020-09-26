@@ -8,8 +8,7 @@ import {
   AccordionDetails,
 } from '@material-ui/core';
 import { getStock } from './api/getStock';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import StockInfo from './Components/StockInfo';
 const AppContainer = styled.div`
   display: flex;
@@ -37,11 +36,21 @@ const SymbolInputContainer = styled.div`
 
 function App() {
   const [symbol, setSymbol] = useState('');
-
+  const [stock, setStock] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = await getStock(symbol);
-    console.log(data);
+    setError(() => null);
+    setLoading(() => true);
+    try {
+      const data = await getStock(symbol);
+      setStock(() => data);
+    } catch (error) {
+      setError(() => error);
+    } finally {
+      setLoading(() => false);
+    }
   };
 
   return (
@@ -54,6 +63,8 @@ function App() {
             className='search-form__input'
             fullWidth
             label='Stock symbol'
+            error={error ? true : false}
+            helperText={error ? 'Symbol not found' : ''}
           />
           <Button
             type='submit'
@@ -65,7 +76,11 @@ function App() {
           </Button>
         </form>
       </SymbolInputContainer>
-      <StockInfo />
+      {loading ? (
+        <CircularProgress style={{ marginTop: '10rem' }} size='5rem' />
+      ) : stock ? (
+        <StockInfo stock={stock} />
+      ) : null}
     </AppContainer>
   );
 }
