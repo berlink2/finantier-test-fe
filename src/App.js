@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import {
   TextField,
@@ -10,11 +10,13 @@ import {
 import { getStock } from './api/getStock';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StockInfo from './Components/StockInfo';
+import { getChartData } from './api/getChartData';
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 5rem;
+  height: 100vh;
 `;
 
 const SymbolInputContainer = styled.div`
@@ -36,22 +38,37 @@ const SymbolInputContainer = styled.div`
 
 function App() {
   const [symbol, setSymbol] = useState('');
+  const [search, setSearch] = useState('');
   const [stock, setStock] = useState(null);
+  const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(() => null);
     setLoading(() => true);
     try {
       const data = await getStock(symbol);
+      const fetchedChartData = await getChartData(symbol);
       setStock(() => data);
+      setChartData(() => fetchedChartData);
+      setSearch(() => symbol);
     } catch (error) {
       setError(() => error);
     } finally {
       setLoading(() => false);
     }
   };
+
+  const formattedChartData = useMemo(() => {
+    console.log(chartData);
+    return chartData
+      ? chartData.map(({ minute, average }) => {
+          return { x: minute, y: average };
+        })
+      : null;
+  }, [search]);
 
   return (
     <AppContainer>
@@ -78,8 +95,8 @@ function App() {
       </SymbolInputContainer>
       {loading ? (
         <CircularProgress style={{ marginTop: '10rem' }} size='5rem' />
-      ) : stock ? (
-        <StockInfo stock={stock} />
+      ) : stock && formattedChartData ? (
+        <StockInfo formattedChartData={formattedChartData} stock={stock} />
       ) : null}
     </AppContainer>
   );

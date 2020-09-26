@@ -8,12 +8,66 @@ import {
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+import {
+  XYPlot,
+  LineSeries,
+  XAxis,
+  YAxis,
+  VerticalGridLines,
+  HorizontalGridLines,
+} from 'react-vis';
 const StockInfoContainer = styled.div`
   width: 75rem;
   margin-top: 5rem;
   display: flex;
   flex-direction: column;
+  margin-bottom: 5rem;
+  transition: visibility 5s ease-in;
+  animation: fadeIn ease 1s;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-o-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-ms-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const CompanyNameContainer = styled.div`
@@ -50,7 +104,6 @@ const StockDetailsContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-row-gap: 1rem;
-
   width: 100%;
 
   .summary-item {
@@ -62,9 +115,29 @@ const StockDetailsContainer = styled.div`
   }
 `;
 
-const StockInfo = ({ stock }) => {
+const StockChartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+`;
+
+const data = [
+  { x: 0, y: 8 },
+  { x: 1, y: 5 },
+  { x: 2, y: 4 },
+  { x: 3, y: 9 },
+  { x: 4, y: 1 },
+  { x: 5, y: 7 },
+  { x: 6, y: 6 },
+  { x: 7, y: 3 },
+  { x: 8, y: 2 },
+  { x: 9, y: 0 },
+];
+
+const StockInfo = ({ stock, formattedChartData }) => {
   const [open, setOpen] = useState(true);
-  console.log(stock);
+  //console.log(chartData);
   return (
     <StockInfoContainer>
       <Accordion onChange={() => setOpen(!open)} expanded={open}>
@@ -110,6 +183,15 @@ const StockInfo = ({ stock }) => {
                   })
                 : 'N/A'}
             </Typography>
+            <StockChartContainer>
+              <XYPlot height={300} width={600} xType='ordinal'>
+                <VerticalGridLines />
+                <HorizontalGridLines />
+                <XAxis />
+                <YAxis />
+                <LineSeries data={formattedChartData} />
+              </XYPlot>
+            </StockChartContainer>
             <StockDetailsContainer>
               <div className='summary-item'>
                 <Typography variant='body1'>Previous Close</Typography>
