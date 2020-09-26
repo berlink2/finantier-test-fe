@@ -9,6 +9,8 @@ const StockChartContainer = styled.div`
   margin-top: 2rem;
 `;
 
+const StockChartHint = styled.div``;
+
 const xAxisTicks = [
   '09:30',
   '10:00',
@@ -50,13 +52,17 @@ const StockPriceChart = ({ formattedChartData }) => {
         <YAxis title='Price in USD' />
         <LineSeries
           animation
-          onNearestX={(value, { event, innerX, index }) => {
+          onNearestX={(value) => {
             setHoverData(value);
           }}
           data={formattedChartData}
         />
 
-        {hoverData && <Hint value={hoverData} />}
+        {hoverData && (
+          <Hint value={hoverData}>
+            <div style={{ background: 'black' }}></div>
+          </Hint>
+        )}
       </XYPlot>
     </StockChartContainer>
   );
