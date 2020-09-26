@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import StockPriceChart from './StockPriceChart';
 import { formatCash } from '../utils/formatCash';
 import {
   Accordion,
@@ -8,14 +9,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {
-  XYPlot,
-  LineSeries,
-  XAxis,
-  YAxis,
-  VerticalGridLines,
-  HorizontalGridLines,
-} from 'react-vis';
 const StockInfoContainer = styled.div`
   width: 75rem;
   margin-top: 5rem;
@@ -122,22 +115,9 @@ const StockChartContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const data = [
-  { x: 0, y: 8 },
-  { x: 1, y: 5 },
-  { x: 2, y: 4 },
-  { x: 3, y: 9 },
-  { x: 4, y: 1 },
-  { x: 5, y: 7 },
-  { x: 6, y: 6 },
-  { x: 7, y: 3 },
-  { x: 8, y: 2 },
-  { x: 9, y: 0 },
-];
-
 const StockInfo = ({ stock, formattedChartData }) => {
   const [open, setOpen] = useState(true);
-  //console.log(chartData);
+
   return (
     <StockInfoContainer>
       <Accordion onChange={() => setOpen(!open)} expanded={open}>
@@ -183,15 +163,7 @@ const StockInfo = ({ stock, formattedChartData }) => {
                   })
                 : 'N/A'}
             </Typography>
-            <StockChartContainer>
-              <XYPlot height={300} width={600} xType='ordinal'>
-                <VerticalGridLines />
-                <HorizontalGridLines />
-                <XAxis />
-                <YAxis />
-                <LineSeries data={formattedChartData} />
-              </XYPlot>
-            </StockChartContainer>
+            <StockPriceChart formattedChartData={formattedChartData} />
             <StockDetailsContainer>
               <div className='summary-item'>
                 <Typography variant='body1'>Previous Close</Typography>
@@ -254,26 +226,3 @@ const StockInfo = ({ stock, formattedChartData }) => {
 };
 
 export default StockInfo;
-
-/*
- display current value, variation, previous close, open, bid, ask, 
- market cap, volume, avg volume and display a chart with the last 24 hours performance.
-  (no need to add 5d, 1m or more ranges).
-{"symbol":"AAPL","companyName":"Apple, Inc.",
-"primaryExchange":"NASDAQ","calculationPrice":"tops",
-"open":null,"openTime":null,
-"openSource":"official","close":null,
-"closeTime":null,"closeSource":"official","high":null,
-"highTime":1601052323963,"highSource":"15 minute delayed price",
-"low":null,"lowTime":1601041007439,"lowSource":"15 minute delayed price",
-"latestPrice":110.56,"latestSource":"IEX real time price",
-"latestTime":"1:00:21 PM","latestUpdate":1601053221054,"latestVolume":null,
-"iexRealtimePrice":110.56,"iexRealtimeSize":100,"iexLastUpdated":1601053221054,
-"delayedPrice":null,"delayedPriceTime":null,"oddLotDelayedPrice":null,"oddLotDelayedPriceTime":null,
-"extendedPrice":null,"extendedChange":null,"extendedChangePercent":null,"extendedPriceTime":null,
-"previousClose":108.22,"previousVolume":167743349,"change":2.34,"changePercent":0.02162,
-"volume":null,"iexMarketPercent":0.005746168715198627,"iexVolume":449815,"avgTotalVolume":195236214,
-"iexBidPrice":110,"iexBidSize":100,"iexAskPrice":111.09,"iexAskSize":100,"iexOpen":null,"iexOpenTime":null,
-"iexClose":110.56,"iexCloseTime":1601053221054,"marketCap":1916811888000,"peRatio":33.32,"week52High":137.98,
-"week52Low":53.15,"ytdChange":0.46287199999999995,"lastTradeTime":1601053221054,"isUSMarketOpen":true}
-*/

@@ -9,16 +9,3 @@ export const getChartData = async (symbol) => {
 
   return data;
 };
-/**
- * average: 108.652
-close: 108.5
-date: "2020-09-25"
-high: 108.9
-label: "09:30 AM"
-low: 108.44
-minute: "09:30"
-notional: 449928.39
-numberOfTrades: 38
-open: 108.46
-volume: 4141
- */

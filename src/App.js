@@ -1,12 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import styled from 'styled-components';
-import {
-  TextField,
-  Button,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import { getStock } from './api/getStock';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StockInfo from './Components/StockInfo';
@@ -61,14 +55,30 @@ function App() {
     }
   };
 
+  //Memoize x and y axis of stock chart data to prevent this expensive computation
+  // from running every rerender
   const formattedChartData = useMemo(() => {
-    console.log(chartData);
     return chartData
-      ? chartData.map(({ minute, average }) => {
-          return { x: minute, y: average };
+      ? chartData.map(({ minute, average }, i) => {
+          if (minute && average) {
+            return { x: minute, y: average };
+          } else {
+            for (let item of chartData.slice(i, chartData.length)) {
+              if (item.minute && item.average) {
+                return { x: item.minute, y: item.average };
+              }
+            }
+          }
         })
       : null;
   }, [search]);
+
+  const handleChange = (e) => {
+    if (error) {
+      setError(() => null);
+    }
+    setSymbol(e.target.value);
+  };
 
   return (
     <AppContainer>
@@ -76,7 +86,7 @@ function App() {
         <form onSubmit={handleSubmit} className='search-form'>
           <TextField
             value={symbol}
-            onChange={(e) => setSymbol(e.target.value)}
+            onChange={(e) => handleChange(e)}
             className='search-form__input'
             fullWidth
             label='Stock symbol'
