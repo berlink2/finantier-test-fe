@@ -11,10 +11,9 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const StockInfoContainer = styled.div`
   width: 75rem;
-  margin-top: 5rem;
+  margin: 5rem 0 5rem 0rem;
   display: flex;
   flex-direction: column;
-  margin-bottom: 5rem;
   transition: visibility 5s ease-in;
   animation: fadeIn ease 1s;
 
@@ -69,6 +68,7 @@ const CompanyNameContainer = styled.div`
 `;
 
 const StockPriceContainer = styled.div`
+  margin-left: 3rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -106,13 +106,6 @@ const StockDetailsContainer = styled.div`
     justify-content: space-between;
     border-bottom: solid 1px lightgrey;
   }
-`;
-
-const StockChartContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2rem;
 `;
 
 const StockInfo = ({ stock, formattedChartData }) => {

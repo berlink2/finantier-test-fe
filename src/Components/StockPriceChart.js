@@ -7,6 +7,7 @@ const StockChartContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 2rem;
+  margin-right: 4rem;
 `;
 
 const xAxisTicks = [
