@@ -9,8 +9,6 @@ const StockChartContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const StockChartHint = styled.div``;
-
 const xAxisTicks = [
   '09:30',
   '10:00',
@@ -58,11 +56,7 @@ const StockPriceChart = ({ formattedChartData }) => {
           data={formattedChartData}
         />
 
-        {hoverData && (
-          <Hint value={hoverData}>
-            <div style={{ background: 'black' }}></div>
-          </Hint>
-        )}
+        {hoverData && <Hint value={hoverData} />}
       </XYPlot>
     </StockChartContainer>
   );
