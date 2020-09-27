@@ -15,6 +15,7 @@ or
 
 4. Install packages with `npm install` or `yarn`
 5. Run app with `npm run start` or `yarn start`
+6. Get Stocked!
 
 ## Most Challenging part
 The most challenging part was having to pick up a new library for visualizing the data (I used react-vis) and getting the stock price data API to work with the react-vis API. The react-vis API is pretty simple but it is not very well documented so finding good examples and instructions involved scouring all over the internet rather than just reading their documentation.
