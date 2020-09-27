@@ -193,7 +193,7 @@ const StockInfo = ({ stock, formattedChartData }) => {
                 <Typography variant='body1'>
                   <strong>
                     {stock.iexAskPrice
-                      ? `${stock.iexAskPrice} x ${stock.iexAskPrice}`
+                      ? `${stock.iexAskPrice} x ${stock.iexAskSize}`
                       : 'N/A'}
                   </strong>
                 </Typography>
@@ -201,13 +201,19 @@ const StockInfo = ({ stock, formattedChartData }) => {
               <div className='summary-item'>
                 <Typography variant='body1'>Volume</Typography>
                 <Typography variant='body1'>
-                  <strong>{stock.volume.toLocaleString()}</strong>
+                  <strong>
+                    {stock.volume ? stock.volume.toLocaleString() : 'N/A'}
+                  </strong>
                 </Typography>
               </div>
               <div className='summary-item'>
                 <Typography variant='body1'>Avg Volume</Typography>
                 <Typography variant='body1'>
-                  <strong>{stock.avgTotalVolume.toLocaleString()}</strong>
+                  <strong>
+                    {stock.avgTotalVolume
+                      ? stock.avgTotalVolume.toLocaleString()
+                      : 'N/A'}
+                  </strong>
                 </Typography>
               </div>
             </StockDetailsContainer>

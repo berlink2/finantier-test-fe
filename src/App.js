@@ -11,23 +11,6 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-const SymbolInputContainer = styled.div`
-  .search-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    &__input {
-      width: 30rem;
-    }
-
-    &__button {
-      margin-top: 1rem;
-      width: 10rem;
-    }
-  }
-`;
-
 function App() {
   const [search, setSearch] = useState('');
   const [stock, setStock] = useState(null);
