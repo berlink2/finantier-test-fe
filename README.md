@@ -1,21 +1,23 @@
 
 
-## How to run app
+## How to use app
 
 ### Visit app deployed via github pages at https://berlink2.github.io/finantier-test-fe/
 
 or
 
-### Run app on your local environment
+### Run app in your local environment (Must have npm or yarn installed)
 1. cd to root folder of app
 2. Get API key from cloud IEX at https://iexcloud.io/
 3. Make .env file in root folder and populate with api key like below:
 
 <img width="385" alt="Screenshot 2020-09-27 at 21 37 59" src="https://user-images.githubusercontent.com/46464571/94367556-aafd6a00-0109-11eb-8e8f-fc421f1f5119.png">
 
-
 4. Install packages with `npm install` or `yarn`
 5. Run app with `npm run start` or `yarn start`
+
+## Most Challenging part
+The most challenging part was having to pick up a new library for visualizing the data (I used react-vis) and getting the stock price data API to work with the react-vis API. The react-vis API is pretty simple but it is not very well documented so finding good examples and instructions involved scouring all over the internet rather than just reading their documentation.
 
 ## Demos
 
