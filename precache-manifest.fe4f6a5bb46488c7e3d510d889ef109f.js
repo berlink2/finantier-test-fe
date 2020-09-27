@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f08a684cf6e89d9430f02d2306164a5a",
+    "revision": "9f1d4f3548c5f9939bf6c0e2e05a432c",
     "url": "/finantier-test-fe/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/finantier-test-fe/static/css/2.5a2f7233.chunk.css"
   },
   {
-    "revision": "21f33a49ee9625498d89",
+    "revision": "94e15d0a76b6347e52a7",
     "url": "/finantier-test-fe/static/css/main.d56ec273.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/finantier-test-fe/static/js/2.68771a20.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "21f33a49ee9625498d89",
-    "url": "/finantier-test-fe/static/js/main.b8140576.chunk.js"
+    "revision": "94e15d0a76b6347e52a7",
+    "url": "/finantier-test-fe/static/js/main.24e3e629.chunk.js"
   },
   {
     "revision": "d007e5a4a915b577bfde",
