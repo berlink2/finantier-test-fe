@@ -40,6 +40,7 @@ const StockPriceChart = ({ formattedChartData }) => {
       >
         <XAxis
           title='Time'
+          tickSize={0}
           tickFormat={(d) => {
             if (xAxisTicks.includes(d)) {
               return d;
